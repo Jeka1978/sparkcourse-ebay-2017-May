@@ -22,6 +22,13 @@ import javax.annotation.PostConstruct;
 public class MainConfig {
 
     @Autowired
+    public MainConfig(Environment environment) {
+        if (environment.getActiveProfiles().length==0) {
+            throw new IllegalStateException("you should activate some spring profile. spark-submit --conf \"spark.driver.extraJavaOptions=-Dspring.active.profiles=...\" ...");
+        }
+    }
+
+    @Autowired
     private SparkConf sparkConf;
 
     @Bean
