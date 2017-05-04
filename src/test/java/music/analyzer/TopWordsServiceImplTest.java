@@ -30,6 +30,9 @@ public class TopWordsServiceImplTest {
     @Autowired
     private JavaSparkContext sc;
 
+    @Autowired
+    private TopWordsService topWordsService;
+
     @Test
     public void topXWords() throws Exception {
 
@@ -39,7 +42,6 @@ public class TopWordsServiceImplTest {
                 "python is the best",
                 "java java java"
         ));
-        TopWordsServiceImpl topWordsService = new TopWordsServiceImpl();
         List<String> list = topWordsService.topXWords(rdd, 1);
         Assert.assertEquals(1,list.size());
         Assert.assertEquals("java",list.get(0));
