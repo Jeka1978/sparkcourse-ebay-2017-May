@@ -1,5 +1,6 @@
 package taxi;
 
+import org.apache.spark.Accumulator;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -53,6 +54,18 @@ public class Main {
 
         totalDriverDistanceRdd.join(driversDataRdd)
                 .mapToPair(Tuple2::_2).sortByKey(false).take(3).forEach(System.out::println);
+
+
+        Accumulator<Integer> accumulator = sc.accumulator(0, "small trips");
+
+        taxiOrdersRdd.foreach(taxiOrder -> {
+            if (taxiOrder.getKm() < 5) accumulator.add(1);
+        });
+
+
+
+        Integer smallTripsNumber = accumulator.value();
+        System.out.println("smallTripsNumber = " + smallTripsNumber);
 
     }
 }
