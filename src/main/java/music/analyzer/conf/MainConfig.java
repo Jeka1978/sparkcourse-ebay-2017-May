@@ -2,6 +2,7 @@ package music.analyzer.conf;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.SQLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,18 +23,25 @@ import javax.annotation.PostConstruct;
 public class MainConfig {
 
     @Autowired
+    private SparkConf sparkConf;
+
+    @Autowired
     public MainConfig(Environment environment) {
         if (environment.getActiveProfiles().length==0) {
             throw new IllegalStateException("you should activate some spring profile. spark-submit --conf \"spark.driver.extraJavaOptions=-Dspring.active.profiles=...\" ...");
         }
     }
 
-    @Autowired
-    private SparkConf sparkConf;
+
 
     @Bean
     public JavaSparkContext sc() {
         return new JavaSparkContext(sparkConf);
+    }
+
+    @Bean
+    public SQLContext sqlContext() {
+        return new SQLContext(sc());
     }
 
    /* @Bean you need this bean if you spring version < 4.3
