@@ -13,7 +13,9 @@ public class Main {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MainConfig.class);
         MusicJudgeService judgeService = context.getBean(MusicJudgeService.class);
-        List<String> topXWords = judgeService.topXWords("beatles", 3);
-        System.out.println("topXWords = " + topXWords);
+//        List<String> topXWords = judgeService.topXWords("beatles", 3);
+//        System.out.println("topXWords = " + topXWords);
+        List<String> list = judgeService.topXWordsWithDataset("beatles", 3);
+        System.out.println("list = " + list);
     }
 }

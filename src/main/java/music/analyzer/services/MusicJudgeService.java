@@ -7,4 +7,6 @@ import java.util.List;
  */
 public interface MusicJudgeService {
     public List<String> topXWords(String artist, int x);
+
+    List<String> topXWordsWithDataset(String artist, int x);
 }

@@ -2,14 +2,13 @@ package music.analyzer.conf;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
-import org.apache.spark.storage.StorageLevel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
-
 import static music.analyzer.conf.ProfilesConst.DEV;
-import static org.apache.spark.sql.functions.*;
 
 /**
  * Created by Evegeny on 04/05/2017.
@@ -50,7 +46,7 @@ public class ConvertRdd2DFTest {
                 DataTypes.createStructField("city", DataTypes.StringType, false),
                 DataTypes.createStructField("km", DataTypes.IntegerType, false)});
 
-        DataFrame dataFrame = sqlContext.createDataFrame(rowJavaRDD, schema);
+        Dataset<Row> dataFrame = sqlContext.createDataFrame(rowJavaRDD, schema);
 
         dataFrame.show();
 
