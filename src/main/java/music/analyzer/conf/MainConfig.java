@@ -3,6 +3,7 @@ package music.analyzer.conf;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.SparkSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -37,6 +38,11 @@ public class MainConfig {
     @Bean
     public JavaSparkContext sc() {
         return new JavaSparkContext(sparkConf);
+    }
+
+    @Bean
+    public SparkSession sparkSession(){
+        return new SparkSession(sc().sc());
     }
 
     @Bean
